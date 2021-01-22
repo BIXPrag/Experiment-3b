@@ -6,7 +6,7 @@ PennController.ResetPrefix(null); // Shorten command names (keep this line here)
 var showProgressBar = true; 
 var progressBarText = "Fortschritt";
 
-//PennController.DebugOff()
+PennController.DebugOff()
 //Debugger ist ein Hilfswerkzeug, das beim Test moegliche Fehlerquellen
 //im Skript identifiziert und Verbesserungsvorschlaege macht. 
 //Im fertigen Experiment sollte das natuerlich ausgeschaltet sein. 
@@ -378,24 +378,30 @@ Template( GetTable( "exp3b_liste1-8.csv" )
     //Zeichnet Werte aus den angegebenen Tabellenspalten fuer die aktuelle Tabellenzeile auf 
 )
 ;
-newTrial( "Dank" ,
-    newHtml("stage7", "stage7.html").print()
-    ,
-    newFunction( ()=> {
-        if (document.exitFullscreen)
-            document.exitFullscreen();
-        else if (document.mozCancelFullScreen) /* Firefox */
-            document.mozCancelFullScreen();
-        else if (document.webkitExitFullscreen) /* Chrome, Safari and Opera */
-            document.webkitExitFullscreen();
-        else if (document.msExitFullscreen) /* IE/Edge */
-            document.msExitFullscreen();
-    }).call() //Verlaesst Vollbild-Modus des Browsers
-    ,
-    newButton("void")
-        .wait()
+Template( GetTable( "exp3b_links.csv" ) 
+        .setGroupColumn( "List" )
+        ,
+    row => newTrial( "Dank" ,
+        newFunction( ()=> {
+            if (document.exitFullscreen)
+                document.exitFullscreen();
+            else if (document.mozCancelFullScreen) /* Firefox */
+                document.mozCancelFullScreen();
+            else if (document.webkitExitFullscreen) /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+            else if (document.msExitFullscreen) /* IE/Edge */
+                document.msExitFullscreen();
+        }).call() //Verlaesst Vollbild-Modus des Browsers
+        ,
+        newHtml("stage7", "stage7.html").print()
+        ,
+        newText("Link", row.Link).center().print()
+        ,
+        newButton("void")
+            .wait()
     //Trick: Eine Schaltflaeche wird erstellt, aber nie angezeigt (via print()-Befehl)
     //sodass unendlich lange auf den Knopfdruck gewartet wird. Das stellt sicher, dass 
     //VPn auf diesem Trial-Bildschirm bleiben. 
-)
-.setOption("countsForProgressBar", false);
+    )
+    .setOption("countsForProgressBar", false)
+);
