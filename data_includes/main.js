@@ -395,7 +395,7 @@ Template( GetTable( "exp3b_links.csv" )
         ,
         newHtml("stage7", "stage7.html").print()
         ,
-        newText("Link", row.Link).center().print()
+        newText("Link", "Dieses Experiment ist nur eine Demo").center().print()
         ,
         newButton("void")
             .wait()
